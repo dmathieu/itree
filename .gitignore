@@ -1,0 +1,3 @@
+.tools/
+coverage.out
+.circleci/.processed.yml
