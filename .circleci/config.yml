@@ -1,0 +1,28 @@
+version: 2.1
+orbs:
+  go: circleci/go@1.5.0
+parameters:
+  go-version:
+    type: string
+    default: "1.15"
+jobs:
+  test:
+    executor:
+      name: go/default
+      tag: <<pipeline.parameters.go-version>>
+    steps:
+      - checkout
+      - go/load-cache
+      - go/mod-download
+      - go/save-cache
+      - run:
+          name: "Golangci-lint"
+          command: make lint
+      - go/test:
+          covermode: atomic
+          failfast: true
+          race: true
+workflows:
+  build:
+    jobs:
+      - test
