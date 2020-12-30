@@ -1,7 +1,6 @@
 package itree
 
 import (
-	"context"
 	"sort"
 )
 
@@ -34,10 +33,10 @@ func NewTree(itvl []Interval) (Tree, error) {
 	return tree, nil
 }
 
-func (t Tree) Contains(ctx context.Context, value int64) bool {
+func (t Tree) Contains(value int64) bool {
 	if t.root == nil {
 		return false
 	}
 
-	return t.root.contains(ctx, value)
+	return t.root.contains(value)
 }

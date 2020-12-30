@@ -1,7 +1,6 @@
 package itree
 
 import (
-	"context"
 	"math/rand"
 	"testing"
 
@@ -30,8 +29,8 @@ func TestTreeContains(t *testing.T) {
 	})
 
 	assert.NoError(t, err)
-	assert.True(t, tree.Contains(context.Background(), 5))
-	assert.False(t, tree.Contains(context.Background(), 9))
+	assert.True(t, tree.Contains(5))
+	assert.False(t, tree.Contains(9))
 }
 
 func TestTreeContainsOverlap(t *testing.T) {
@@ -43,8 +42,8 @@ func TestTreeContainsOverlap(t *testing.T) {
 	})
 
 	assert.NoError(t, err)
-	assert.True(t, tree.Contains(context.Background(), 9))
-	assert.False(t, tree.Contains(context.Background(), 4))
+	assert.True(t, tree.Contains(9))
+	assert.False(t, tree.Contains(4))
 }
 
 func BenchmarkBuildTree(b *testing.B) {
@@ -75,6 +74,6 @@ func BenchmarkTreeContains(b *testing.B) {
 
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		tree.Contains(context.Background(), rand.Int63())
+		tree.Contains(rand.Int63())
 	}
 }

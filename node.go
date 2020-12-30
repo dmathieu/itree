@@ -1,7 +1,6 @@
 package itree
 
 import (
-	"context"
 	"fmt"
 )
 
@@ -68,16 +67,16 @@ func (tn *intervalTreeNode) insert(r []Interval) error {
 	return nil
 }
 
-func (tn *intervalTreeNode) contains(ctx context.Context, value int64) bool {
+func (tn *intervalTreeNode) contains(value int64) bool {
 	if tn.Start <= value && tn.End >= value {
 		return true
 	}
 
 	if tn.left != nil && value < tn.left.SubtreeMax {
-		return tn.left.contains(ctx, value)
+		return tn.left.contains(value)
 	}
 	if tn.right != nil {
-		return tn.right.contains(ctx, value)
+		return tn.right.contains(value)
 	}
 	return false
 }

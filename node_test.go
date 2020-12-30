@@ -1,7 +1,6 @@
 package itree
 
 import (
-	"context"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -85,6 +84,6 @@ func TestIntervalTreeNodeInsertUnbalancedRight(t *testing.T) {
 func TestIntervalTreeNodeContains(t *testing.T) {
 	n := newIntervalTreeNode(Interval{Start: 1, End: 3})
 
-	assert.False(t, n.contains(context.Background(), 5))
-	assert.True(t, n.contains(context.Background(), 2))
+	assert.False(t, n.contains(5))
+	assert.True(t, n.contains(2))
 }
