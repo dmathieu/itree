@@ -2,6 +2,7 @@ package itree
 
 import (
 	"context"
+	"fmt"
 )
 
 type intervalTreeNode struct {
@@ -22,33 +23,49 @@ func newIntervalTreeNode(i Interval) *intervalTreeNode {
 	}
 }
 
-func (tn *intervalTreeNode) insert(r []Interval) {
+func (tn *intervalTreeNode) insert(r []Interval) error {
 	if len(r) == 0 {
-		return
+		return nil
 	}
 	c := len(r) / 2
 	e := newIntervalTreeNode(r[c])
 
 	if e.End < tn.Start {
-		if tn.left == nil {
-			tn.left = e
-		} else {
-			tn.left.insert([]Interval{r[c]})
+		if tn.left != nil {
+			return fmt.Errorf(
+				"unbalanced tree. Tried adding %#v to the left of %#v, when %#v is already set",
+				r[c],
+				tn.Interval,
+				tn.left.Interval)
 		}
+
+		tn.left = e
 	} else {
-		if tn.right == nil {
-			tn.right = e
-		} else {
-			tn.right.insert([]Interval{r[c]})
+		if tn.right != nil {
+			return fmt.Errorf(
+				"unbalanced tree. Tried adding %#v to the right of %#v, when %#v is already set",
+				r[c],
+				tn.Interval,
+				tn.right.Interval)
 		}
+
+		tn.right = e
 	}
-	e.insert(r[0:c])
-	e.insert(r[c+1:])
+	err := e.insert(r[0:c])
+	if err != nil {
+		return err
+	}
+	err = e.insert(r[c+1:])
+	if err != nil {
+		return err
+	}
 
 	if e.SubtreeMax > tn.SubtreeMax {
 		tn.SubtreeMax = e.SubtreeMax
 	}
 	tn.SubtreeCount += e.SubtreeCount
+
+	return nil
 }
 
 func (tn *intervalTreeNode) contains(ctx context.Context, value int64) bool {

@@ -9,7 +9,8 @@ import (
 
 func TestIntervalTreeNodeInsertLeft(t *testing.T) {
 	n := newIntervalTreeNode(Interval{Start: 4, End: 6})
-	n.insert([]Interval{Interval{Start: 1, End: 3}})
+	err := n.insert([]Interval{Interval{Start: 1, End: 3}})
+	assert.NoError(t, err)
 
 	assert.Equal(t, 2, n.SubtreeCount)
 	assert.Equal(t, int64(6), n.SubtreeMax)
@@ -19,7 +20,8 @@ func TestIntervalTreeNodeInsertLeft(t *testing.T) {
 
 func TestIntervalTreeNodeInsertRight(t *testing.T) {
 	n := newIntervalTreeNode(Interval{Start: 4, End: 6})
-	n.insert([]Interval{Interval{Start: 8, End: 10}})
+	err := n.insert([]Interval{Interval{Start: 8, End: 10}})
+	assert.NoError(t, err)
 
 	assert.Equal(t, 2, n.SubtreeCount)
 	assert.Equal(t, int64(10), n.SubtreeMax)
@@ -29,11 +31,12 @@ func TestIntervalTreeNodeInsertRight(t *testing.T) {
 
 func TestIntervalTreeNodeInsertMultiple(t *testing.T) {
 	n := newIntervalTreeNode(Interval{Start: 4, End: 6})
-	n.insert([]Interval{
+	err := n.insert([]Interval{
 		Interval{Start: 1, End: 3},
-		Interval{Start: 8, End: 10},
 		Interval{Start: 5, End: 7},
+		Interval{Start: 8, End: 10},
 	})
+	assert.NoError(t, err)
 
 	assert.Equal(t, &intervalTreeNode{
 		Interval:     Interval{Start: 4, End: 6},
@@ -41,24 +44,42 @@ func TestIntervalTreeNodeInsertMultiple(t *testing.T) {
 		SubtreeMax:   10,
 		left:         nil,
 		right: &intervalTreeNode{
-			Interval:     Interval{Start: 8, End: 10},
+			Interval:     Interval{Start: 5, End: 7},
 			SubtreeCount: 3,
 			SubtreeMax:   10,
 			left: &intervalTreeNode{
 				Interval:     Interval{Start: 1, End: 3},
-				SubtreeCount: 2,
-				SubtreeMax:   7,
+				SubtreeCount: 1,
+				SubtreeMax:   3,
 				left:         nil,
-				right: &intervalTreeNode{
-					Interval:     Interval{Start: 5, End: 7},
-					SubtreeCount: 1,
-					SubtreeMax:   7,
-					left:         nil,
-					right:        nil,
-				},
+			},
+			right: &intervalTreeNode{
+				Interval:     Interval{Start: 8, End: 10},
+				SubtreeCount: 1,
+				SubtreeMax:   10,
+				left:         nil,
+				right:        nil,
 			},
 		},
 	}, n)
+}
+
+func TestIntervalTreeNodeInsertUnbalancedLeft(t *testing.T) {
+	n := newIntervalTreeNode(Interval{Start: 4, End: 6})
+	err := n.insert([]Interval{Interval{Start: 1, End: 3}})
+	assert.NoError(t, err)
+
+	err = n.insert([]Interval{Interval{Start: 1, End: 3}})
+	assert.Error(t, err)
+}
+
+func TestIntervalTreeNodeInsertUnbalancedRight(t *testing.T) {
+	n := newIntervalTreeNode(Interval{Start: 4, End: 6})
+	err := n.insert([]Interval{Interval{Start: 8, End: 10}})
+	assert.NoError(t, err)
+
+	err = n.insert([]Interval{Interval{Start: 8, End: 10}})
+	assert.Error(t, err)
 }
 
 func TestIntervalTreeNodeContains(t *testing.T) {

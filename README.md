@@ -23,7 +23,7 @@ Here is the output from a 2019 MacBook Pro
 
 ```
 BenchmarkBuildTree
-BenchmarkBuildTree-12              10000           2758013 ns/op
+BenchmarkBuildTree-12              10000            990813 ns/op
 BenchmarkTreeContains
-BenchmarkTreeContains-12         2977766               638 ns/op
+BenchmarkTreeContains-12         2967738               469 ns/op
 ```

@@ -17,13 +17,19 @@ func NewTree(itvl []Interval) (Tree, error) {
 	}
 
 	sort.Slice(itvl, func(i, j int) bool {
-		return itvl[i].Start > itvl[j].Start
+		return itvl[i].End > itvl[j].End
 	})
 
 	rID := len(itvl) / 2
 	tree.root = newIntervalTreeNode(itvl[rID])
-	tree.root.insert(itvl[0:rID])
-	tree.root.insert(itvl[rID+1:])
+	err := tree.root.insert(itvl[0:rID])
+	if err != nil {
+		return tree, err
+	}
+	err = tree.root.insert(itvl[rID+1:])
+	if err != nil {
+		return tree, err
+	}
 
 	return tree, nil
 }

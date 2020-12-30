@@ -48,14 +48,15 @@ func TestTreeContainsOverlap(t *testing.T) {
 }
 
 func BenchmarkBuildTree(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		intervals := []Interval{}
-		for j := 0; j < b.N; j++ {
-			first := rand.Int63()
-			second := first + int64(rand.Intn(100))
-			intervals = append(intervals, Interval{Start: first, End: second})
-		}
+	intervals := []Interval{}
+	for j := 0; j < b.N; j++ {
+		first := rand.Int63()
+		second := first + int64(rand.Intn(100))
+		intervals = append(intervals, Interval{Start: first, End: second})
+	}
+	b.ResetTimer()
 
+	for i := 0; i < b.N; i++ {
 		_, err := NewTree(intervals)
 		assert.NoError(b, err)
 	}
