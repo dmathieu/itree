@@ -6,6 +6,8 @@ An Interval Tree Implementation written in Go
 
 ## Usage
 
+## With int64 values
+
 ```go
 intervals := []itree.Interval{
   itree.Interval{Start: 1, End: 3},
@@ -14,6 +16,31 @@ intervals := []itree.Interval{
 
 tree, err := itree.NewTree(intervals)
 tree.Contains(context.Background(), 3)
+```
+
+## With times
+
+```go
+now := time.Now()
+intervals := []time.Time{
+  // The first value is the beginning of the interval, the second is the end
+  []time.Time{now.Add(-2 * time.Minute), now.Add(-1 * time.Minute)},
+  []time.Time{now.Add(-2 * time.Hour), now.Add(-1 * time.Hour)},
+}
+
+tree, err := itree.NewTimesTree(intervals)
+tree.Contains(now)
+```
+
+## With IP Networks
+
+```go
+_, ipnet, _ := net.ParseCIDR("127.0.0.1/32")
+
+intervals := []*net.IPNet{ipnet}
+tree, err := itree.NewIPNetTree(intervals)
+
+tree.Contains(net.ParseIP("8.8.8.8"))
 ```
 
 ## Benchmarks
