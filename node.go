@@ -8,6 +8,7 @@ type intervalTreeNode struct {
 	Interval
 
 	SubtreeCount int
+	SubtreeMin   int64
 	SubtreeMax   int64
 
 	left  *intervalTreeNode
@@ -18,6 +19,7 @@ func newIntervalTreeNode(i Interval) *intervalTreeNode {
 	return &intervalTreeNode{
 		Interval:     i,
 		SubtreeCount: 1,
+		SubtreeMin:   i.Start,
 		SubtreeMax:   i.End,
 	}
 }
@@ -59,6 +61,9 @@ func (tn *intervalTreeNode) insert(r []Interval) error {
 		return err
 	}
 
+	if e.SubtreeMin < tn.SubtreeMin {
+		tn.SubtreeMin = e.SubtreeMin
+	}
 	if e.SubtreeMax > tn.SubtreeMax {
 		tn.SubtreeMax = e.SubtreeMax
 	}
@@ -72,10 +77,10 @@ func (tn *intervalTreeNode) contains(value int64) bool {
 		return true
 	}
 
-	if tn.left != nil && value < tn.left.SubtreeMax {
+	if tn.left != nil && value >= tn.left.SubtreeMin && value <= tn.left.SubtreeMax {
 		return tn.left.contains(value)
 	}
-	if tn.right != nil {
+	if tn.right != nil && value >= tn.right.SubtreeMin && value <= tn.right.SubtreeMax {
 		return tn.right.contains(value)
 	}
 	return false

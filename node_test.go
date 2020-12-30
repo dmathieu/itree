@@ -40,21 +40,25 @@ func TestIntervalTreeNodeInsertMultiple(t *testing.T) {
 	assert.Equal(t, &intervalTreeNode{
 		Interval:     Interval{Start: 4, End: 6},
 		SubtreeCount: 4,
+		SubtreeMin:   1,
 		SubtreeMax:   10,
 		left:         nil,
 		right: &intervalTreeNode{
 			Interval:     Interval{Start: 5, End: 7},
 			SubtreeCount: 3,
+			SubtreeMin:   1,
 			SubtreeMax:   10,
 			left: &intervalTreeNode{
 				Interval:     Interval{Start: 1, End: 3},
 				SubtreeCount: 1,
+				SubtreeMin:   1,
 				SubtreeMax:   3,
 				left:         nil,
 			},
 			right: &intervalTreeNode{
 				Interval:     Interval{Start: 8, End: 10},
 				SubtreeCount: 1,
+				SubtreeMin:   8,
 				SubtreeMax:   10,
 				left:         nil,
 				right:        nil,
