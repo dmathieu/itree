@@ -1,5 +1,5 @@
 # iTree
-[![Go Reference](https://pkg.go.dev/badge/dmathieu/itree.svg)](https://pkg.go.dev/dmathieu/itree)
+[![Go Reference](https://pkg.go.dev/badge/github.com/dmathieu/itree.svg)](https://pkg.go.dev/github.com/dmathieu/itree)
 [![CircleCI](https://circleci.com/gh/dmathieu/itree.svg?style=svg)](https://app.circleci.com/pipelines/github/dmathieu/itree)
 
 An Interval Tree Implementation written in Go
