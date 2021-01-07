@@ -43,18 +43,6 @@ tree, err := itree.NewIPNetTree(intervals)
 tree.Contains(net.ParseIP("8.8.8.8"))
 ```
 
-## Benchmarks
-
-You can run the internal benchmarks using  `go test -bench=. ./...`
-Here is the output from a 2019 MacBook Pro
-
-```
-BenchmarkBuildTree
-BenchmarkBuildTree-12              10000            990813 ns/op
-BenchmarkTreeContains
-BenchmarkTreeContains-12         2967738               469 ns/op
-```
-
 ## Graphviz Generation
 
 After generating a tree, you can generate a graphviz representation of it.
@@ -71,3 +59,15 @@ The graphviz generation creates the graph using
 [go-graphviz](https://github.com/goccy/go-graphviz), and returns a
 `*cgraph.Graph`. So you can use that object to export the data to any format
 supported by the library.
+
+# Benchmarks
+
+You can run the internal benchmarks using  `go test -bench=. ./...`
+Here is the output from a 2019 MacBook Pro
+
+```
+BenchmarkBuildTree
+BenchmarkBuildTree-12              10000            990813 ns/op
+BenchmarkTreeContains
+BenchmarkTreeContains-12         2967738               469 ns/op
+```
