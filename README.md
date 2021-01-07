@@ -59,7 +59,7 @@ BenchmarkTreeContains-12         2967738               469 ns/op
 
 After generating a tree, you can generate a graphviz representation of it.
 
-```
+```go
 tree := // Generate your tree
 graph, err := itree.Graphviz(tree)
 if err != nil {
