@@ -14,6 +14,7 @@ func TestGraphviz(t *testing.T) {
 		Interval{Start: 10, End: 12},
 		Interval{Start: 13, End: 16},
 	})
+	assert.NoError(t, err)
 
 	_ = tree.Contains(15)
 
