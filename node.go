@@ -73,6 +73,8 @@ func (tn *intervalTreeNode) insert(r []Interval) error {
 }
 
 func (tn *intervalTreeNode) contains(value int64) bool {
+	tn.Interval.visited = true
+
 	if tn.Start <= value && tn.End >= value {
 		return true
 	}

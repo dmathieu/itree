@@ -30,6 +30,10 @@ func createGraphvizNode(graph *cgraph.Graph, in *intervalTreeNode) (*cgraph.Node
 		return nil, err
 	}
 
+	if in.Interval.visited {
+		n.SetFontColor("red")
+	}
+
 	if in.left != nil {
 		l, err := createGraphvizNode(graph, in.left)
 		if err != nil {
