@@ -49,7 +49,7 @@ After generating a tree, you can generate a graphviz representation of it.
 
 ```go
 tree := // Generate your tree
-graph, err := itree.Graphviz(tree)
+graph, err := tree.Graphviz()
 if err != nil {
   log.Fatal(err)
 }

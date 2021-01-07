@@ -10,7 +10,7 @@ import (
 var g = graphviz.New()
 
 // Graphviz generates a graphviz representation of the tree
-func Graphviz(t Tree) (*cgraph.Graph, error) {
+func (t Tree) Graphviz() (*cgraph.Graph, error) {
 	graph, err := g.Graph()
 	if err != nil {
 		return nil, err

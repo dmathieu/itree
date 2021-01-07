@@ -38,7 +38,7 @@ func main() {
 
 	_ = tree.Contains(net.IPv4(8, 8, 8, 8))
 
-	graph, err := itree.Graphviz(tree.Tree)
+	graph, err := tree.Graphviz()
 	if err != nil {
 		log.Fatal(err)
 	}

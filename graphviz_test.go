@@ -18,7 +18,7 @@ func TestGraphviz(t *testing.T) {
 
 	_ = tree.Contains(15)
 
-	graph, err := Graphviz(tree)
+	graph, err := tree.Graphviz()
 	assert.NoError(t, err)
 
 	var buf bytes.Buffer
