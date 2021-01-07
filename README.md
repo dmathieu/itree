@@ -54,3 +54,20 @@ BenchmarkBuildTree-12              10000            990813 ns/op
 BenchmarkTreeContains
 BenchmarkTreeContains-12         2967738               469 ns/op
 ```
+
+## Graphviz Generation
+
+After generating a tree, you can generate a graphviz representation of it.
+
+```
+tree := // Generate your tree
+graph, err := itree.Graphviz(tree)
+if err != nil {
+  log.Fatal(err)
+}
+```
+
+The graphviz generation creates the graph using
+[go-graphviz](https://github.com/goccy/go-graphviz), and returns a
+`*cgraph.Graph`. So you can use that object to export the data to any format
+supported by the library.
