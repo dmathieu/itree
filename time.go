@@ -3,6 +3,8 @@ package itree
 import (
 	"fmt"
 	"time"
+
+	"github.com/goccy/go-graphviz/cgraph"
 )
 
 type TimesTree struct {
@@ -11,6 +13,14 @@ type TimesTree struct {
 
 func (t TimesTree) Contains(v time.Time) bool {
 	return t.Tree.Contains(v.Unix())
+}
+
+func (t TimesTree) Graphviz(opt GraphvizOptions) (*cgraph.Graph, error) {
+	opt.stringValue = func(v int64) string {
+		return time.Unix(v, 0).Format(time.RFC3339)
+	}
+
+	return t.Tree.Graphviz(opt)
 }
 
 func NewTimesTree(val [][]time.Time) (TimesTree, error) {
