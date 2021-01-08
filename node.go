@@ -13,6 +13,8 @@ type intervalTreeNode struct {
 
 	left  *intervalTreeNode
 	right *intervalTreeNode
+
+	visited bool
 }
 
 func newIntervalTreeNode(i Interval) *intervalTreeNode {
@@ -73,7 +75,7 @@ func (tn *intervalTreeNode) insert(r []Interval) error {
 }
 
 func (tn *intervalTreeNode) contains(value int64) bool {
-	tn.Interval.visited = true
+	tn.visited = true
 
 	if tn.Start <= value && tn.End >= value {
 		return true
