@@ -33,23 +33,19 @@ func (tn *intervalTreeNode) insert(r []Interval) error {
 	c := len(r) / 2
 	e := newIntervalTreeNode(r[c])
 
+	if e.Start > e.End {
+		return fmt.Errorf("start cannot be after End for node %#v", e)
+	}
+
 	if e.End < tn.Start {
 		if tn.left != nil {
-			return fmt.Errorf(
-				"unbalanced tree. Tried adding %#v to the left of %#v, when %#v is already set",
-				r[c],
-				tn.Interval,
-				tn.left.Interval)
+			return tn.left.insert(r)
 		}
 
 		tn.left = e
 	} else {
 		if tn.right != nil {
-			return fmt.Errorf(
-				"unbalanced tree. Tried adding %#v to the right of %#v, when %#v is already set",
-				r[c],
-				tn.Interval,
-				tn.right.Interval)
+			return tn.right.insert(r)
 		}
 
 		tn.right = e
