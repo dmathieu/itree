@@ -65,10 +65,6 @@ coverage: ## Generates a coverage profile and opens a web browser with the resul
 	$(GOTEST) $(GOTEST_OPT) $(GOTEST_COVERAGE_OPT) $(PKG_SPEC)
 	go tool cover -html=$(COVER_PROFILE)
 
-.PHONY: run
-run: ## Runs the app
-	go run cmd/pacemaker/main.go
-
 # Processes the circle ci config locally
 $(CIRCLECI_CONFIG):
 $(PROCESSED_CIRCLECI_CONFIG): $(CIRCLECI_CONFIG)
